@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bagus.busreservationsystem.models.User;
 import com.bagus.busreservationsystem.models.UserRegister;
@@ -78,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-
+                    Toast.makeText(RegisterActivity.this, "No internet Access", Toast.LENGTH_SHORT).show();
                 }
             });
         });
