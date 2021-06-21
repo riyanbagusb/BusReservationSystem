@@ -1,14 +1,14 @@
-package com.bagus.busreservationsystem;
+package com.bagus.busreservationsystem.controller;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bagus.busreservationsystem.R;
 import com.bagus.busreservationsystem.models.User;
 import com.bagus.busreservationsystem.models.UserRegister;
 import com.bagus.busreservationsystem.rest.APIClient;

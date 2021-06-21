@@ -1,66 +1,123 @@
 package com.bagus.busreservationsystem.controller.ui;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.bagus.busreservationsystem.R;
+import com.bagus.busreservationsystem.models.Stop;
+import com.bagus.busreservationsystem.rest.APIClient;
+import com.bagus.busreservationsystem.rest.APIInterface;
+import com.bagus.busreservationsystem.utils.MySession;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class HomeFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public HomeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private EditText edCalendar, edStartDate, edEndDate;
+    private Calendar myCalendar;
+    private DatePickerDialog.OnDateSetListener date;
+    private Spinner spSourceStop,spDestinationStop;
+    private APIInterface apiInterface;
+    private List<Integer> spinnerListId;
+    private List<String> spinnerListName;
+    private View fragmentView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        fragmentView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        myCalendar = Calendar.getInstance();
+
+        edStartDate = fragmentView.findViewById(R.id.edStartDate);
+        edEndDate = fragmentView.findViewById(R.id.edEndDate);
+        spSourceStop = fragmentView.findViewById(R.id.spSourceStop);
+        spDestinationStop = fragmentView.findViewById(R.id.spDestinationStop);
+
+
+        date = (view, year, monthOfYear, dayOfMonth) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel(edCalendar);
+        };
+
+        edStartDate.setOnClickListener(v -> {
+            showCalendar(date);
+            edCalendar = edStartDate;
+        });
+
+        edEndDate.setOnClickListener(v -> {
+            showCalendar(date);
+            edCalendar = edEndDate;
+        });
+
+        getStops();
+
+        return fragmentView;
+    }
+
+    private void showCalendar(DatePickerDialog.OnDateSetListener date) {
+        DatePickerDialog dialog = new DatePickerDialog(
+                getActivity(),
+                date,
+                myCalendar.get(Calendar.YEAR),
+                myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+        dialog.getDatePicker().setMinDate(new Date().getTime());
+        dialog.show();
+    }
+
+    private void updateLabel(EditText editText) {
+        String myFormat = "MM/dd/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        editText.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    private void getStops(){
+
+        spinnerListId = new ArrayList<>();
+        spinnerListName = new ArrayList<>();
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<List<Stop>> stopsCall = apiInterface.getStops();
+
+        stopsCall.enqueue(new Callback<List<Stop>>() {
+            @Override
+            public void onResponse(Call<List<Stop>> call, Response<List<Stop>> response) {
+                List<Stop> stops = response.body();
+                for (int i = 0; i < stops.size(); i++) {
+                    spinnerListId.add(stops.get(i).getId());
+                    spinnerListName.add(stops.get(i).getName());
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(fragmentView.getContext(), R.layout.spinner_list_item, spinnerListName);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spSourceStop.setAdapter(adapter);
+                spDestinationStop.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Stop>> call, Throwable t) {
+
+            }
+        });
     }
 }

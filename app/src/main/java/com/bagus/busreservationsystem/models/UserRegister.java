@@ -31,17 +31,11 @@ public class UserRegister {
 
     public UserRegister(String email, String firstName, String lastName, String mobileNumber, String password, List<String> role) {
         this.email = email;
-        Log.d("pusing", "UserRegister: "+this.email);
         this.firstName = firstName;
-        Log.d("pusing", "UserRegister: "+this.firstName);
         this.lastName = lastName;
-        Log.d("pusing", "UserRegister: "+this.lastName);
         this.mobileNumber = mobileNumber;
-        Log.d("pusing", "UserRegister: "+this.mobileNumber);
         this.password = password;
-        Log.d("pusing", "UserRegister: "+this.password);
         this.role = role;
-        Log.d("pusing", "UserRegister: "+this.role);
     }
 
     public String getEmail() {

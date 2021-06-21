@@ -1,14 +1,14 @@
-package com.bagus.busreservationsystem;
+package com.bagus.busreservationsystem.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bagus.busreservationsystem.R;
 import com.bagus.busreservationsystem.models.AuthLogin;
 import com.bagus.busreservationsystem.models.User;
 import com.bagus.busreservationsystem.models.UserLogin;
@@ -47,8 +47,8 @@ public class LoginActivity extends AppCompatActivity {
         if (mySession.isLoggedIn()){
             intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
-
 
         btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(v -> {
@@ -71,8 +71,8 @@ public class LoginActivity extends AppCompatActivity {
                 AuthLogin userData = response.body();
                 if (userData != null){
                     User user = userData.getUser();
-                    mySession.createLoginSession(user.getId(),user.getEmail(),user.getFirstName(),userData.accessToken);
-                    Intent i = new Intent(LoginActivity.this,MainActivity.class);
+                    mySession.createLoginSession(user.getId(),user.getEmail(),user.getFirstName(),user.getLastName(),userData.accessToken);
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(i);
                     finish();
                 }

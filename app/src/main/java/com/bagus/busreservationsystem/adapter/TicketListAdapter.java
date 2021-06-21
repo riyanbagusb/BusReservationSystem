@@ -1,4 +1,4 @@
-package com.bagus.busreservationsystem;
+package com.bagus.busreservationsystem.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bagus.busreservationsystem.R;
 import com.bagus.busreservationsystem.models.Ticket;
 
 import org.jetbrains.annotations.NotNull;
@@ -33,13 +34,13 @@ public class TicketListAdapter extends RecyclerView.Adapter<TicketListAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull TicketListAdapter.MyViewHolder holder, int position) {
-        holder.txtSeatNumber.setText(ticketList.get(position).getSeatNumber());
+        holder.txtSeatNumber.setText(ticketList.get(position).getSeatNumber().toString());
         holder.txtJourneyDate.setText(ticketList.get(position).getJourneyDate());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return ticketList.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
