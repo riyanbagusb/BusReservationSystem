@@ -2,7 +2,10 @@
 
 <samp>
 
-- Splash Screen
+- Aplikasi Bus Reservation System
+![Main Menu](https://github.com/riyanbagusb/BusReservationSystem/raw/master/images/BRS.png)
+
+<!-- - Splash Screen
 ![Splash Screen](https://github.com/riyanbagusb/BusReservationSystem/raw/master/images/splash.jpg)
 
 - Main Activity (Search Trip Schedule)
@@ -15,6 +18,6 @@
 ![My Ticket](https://github.com/riyanbagusb/BusReservationSystem/raw/master/images/ticket.jpg)
 
 - Profile
-![Profile](https://github.com/riyanbagusb/BusReservationSystem/raw/master/images/profile.jpg)
+![Profile](https://github.com/riyanbagusb/BusReservationSystem/raw/master/images/profile.jpg) -->
 
 </samp>
