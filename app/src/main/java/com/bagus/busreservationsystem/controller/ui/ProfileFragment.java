@@ -18,8 +18,8 @@ import java.util.HashMap;
 
 public class ProfileFragment extends Fragment {
     private MySession mySession;
-    private String firstName, lastName, email;
-    private TextView txtName, txtEmail;
+    private String firstName, lastName, email, mobileNumber;
+    private TextView txtName, txtEmail, txtFirstName, txtLastName, txtEmail2, txtMobileNumber;
     private Button btnLogout;
 
     @Override
@@ -31,18 +31,28 @@ public class ProfileFragment extends Fragment {
 
         if (mySession.isLoggedIn()) {
             //Get Session
-            HashMap<String, String> sUsernya = mySession.getUserDetails();
-            firstName = sUsernya.get(MySession.KEY_FIRST_NAME);
-            lastName = sUsernya.get(MySession.KEY_LAST_NAME);
-            email = sUsernya.get(MySession.KEY_EMAIL);
+            HashMap<String, String> userSession = mySession.getUserDetails();
+            firstName = userSession.get(MySession.KEY_FIRST_NAME);
+            lastName = userSession.get(MySession.KEY_LAST_NAME);
+            mobileNumber = userSession.get(MySession.KEY_MOBILE_NUMBER);
+            email = userSession.get(MySession.KEY_EMAIL);
         }
 
         btnLogout = fragmentView.findViewById(R.id.btnLogout);
         txtName = fragmentView.findViewById(R.id.txtName);
         txtEmail = fragmentView.findViewById(R.id.txtEmail);
+        txtFirstName = fragmentView.findViewById(R.id.txtFirstName);
+        txtLastName = fragmentView.findViewById(R.id.txtLastName);
+        txtEmail2 = fragmentView.findViewById(R.id.txtEmail2);
+        txtMobileNumber = fragmentView.findViewById(R.id.txtMobileNumber);
+
 
         txtName.setText(firstName + " " + lastName);
         txtEmail.setText(email);
+        txtFirstName.setText(firstName);
+        txtLastName.setText(lastName);
+        txtEmail2.setText(email);
+        txtMobileNumber.setText(mobileNumber);
 
         btnLogout.setOnClickListener(v -> {
             ((MainActivity)getActivity()).logout();

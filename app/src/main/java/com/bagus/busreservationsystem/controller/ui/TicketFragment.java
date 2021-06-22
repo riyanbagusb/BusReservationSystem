@@ -16,7 +16,9 @@ import com.bagus.busreservationsystem.adapter.TicketListAdapter;
 import com.bagus.busreservationsystem.models.Ticket;
 import com.bagus.busreservationsystem.rest.APIClient;
 import com.bagus.busreservationsystem.rest.APIInterface;
+import com.bagus.busreservationsystem.utils.MySession;
 
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -29,6 +31,8 @@ public class TicketFragment extends Fragment {
     private RecyclerView.Adapter ticketAdapter;
     private RecyclerView.LayoutManager ticketLayoutManager;
     private View fragmentView;
+    private MySession mySession;
+    private String userId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,8 +49,14 @@ public class TicketFragment extends Fragment {
     }
 
     private void getTickets() {
+        mySession = new MySession(getActivity());
+        if (mySession.isLoggedIn()) {
+            HashMap<String, String> sUsernya = mySession.getUserDetails();
+            userId = sUsernya.get(MySession.KEY_ID);
+        }
+
         apiInterface = APIClient.getClient().create(APIInterface.class);
-        Call<List<Ticket>> listCall = apiInterface.getTickets();
+        Call<List<Ticket>> listCall = apiInterface.getTickets(userId);
         listCall.enqueue(new Callback<List<Ticket>>() {
             @Override
             public void onResponse(Call<List<Ticket>> call, Response<List<Ticket>> response) {

@@ -8,122 +8,170 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="35dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="20dp"
-            android:paddingHorizontal="40dp"
+            android:padding="20dp"
             android:background="@drawable/rounded_bottom"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:textColor="@color/white"
-                android:text="Source Stop:" />
-
-            <Spinner
-                android:id="@+id/spSourceStop"
-                android:background="@drawable/rounded_corner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:dropDownVerticalOffset="60dp"
-                android:entries="@array/source"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="5dp"
-                android:textColor="@color/white"
-                android:text="Destination Stop:" />
-
-            <Spinner
-                android:id="@+id/spDestinationStop"
-                android:background="@drawable/rounded_corner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:dropDownVerticalOffset="60dp"
-                android:entries="@array/source"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
             <LinearLayout
+                android:weightSum="2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="2"
                 android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputLayout
+                <LinearLayout
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginRight="10dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:startIconDrawable="@drawable/ic_baseline_date_range"
-                    android:textColorHint="@color/bca">
+                    android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/edStartDate"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/bca"
-                        android:hint="Start Date"
-                        android:clickable="false"
-                        android:cursorVisible="false"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"/>
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/white"
+                        android:text="Source Stop:" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <Spinner
+                        android:id="@+id/spSourceStop"
+                        android:background="@drawable/rounded_corner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:dropDownVerticalOffset="50dp"
+                        android:entries="@array/source"/>
 
+                </LinearLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
+                <LinearLayout
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginLeft="10dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:startIconDrawable="@drawable/ic_baseline_date_range"
-                    android:textColorHint="@color/bca">
+                    android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/edEndDate"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/bca"
-                        android:hint="End Date"
-                        android:clickable="false"
-                        android:cursorVisible="false"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"/>
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/white"
+                        android:text="Destination Stop:" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <Spinner
+                        android:id="@+id/spDestinationStop"
+                        android:background="@drawable/rounded_corner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:dropDownVerticalOffset="50dp"
+                        android:entries="@array/source"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="right"
-                android:background="@drawable/rounded_corner"
-                android:drawableRight="@drawable/ic_baseline_search"
-                android:text="Cari Trip"
-                android:textAllCaps="false" />
-
         </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            android:layout_margin="10dp">
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="10dp"
+                        app:boxCornerRadiusTopStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:startIconDrawable="@drawable/ic_baseline_date_range"
+                        android:textColorHint="@color/bca">
+
+                        <EditText
+                            android:padding="0dp"
+                            android:id="@+id/edStartDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/bca"
+                            android:hint="Start Date"
+                            android:clickable="false"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        app:boxCornerRadiusTopStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:startIconDrawable="@drawable/ic_baseline_date_range"
+                        android:textColorHint="@color/bca">
+
+                        <EditText
+                            android:padding="0dp"
+                            android:id="@+id/edEndDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/bca"
+                            android:hint="End Date"
+                            android:clickable="false"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnCari"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:layout_gravity="right"
+                    android:drawableRight="@drawable/ic_baseline_search"
+                    android:text="Cari Trip"
+                    android:textAllCaps="false" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="20dp"
+            android:id="@+id/rvListTripSchedule"/>
 
     </LinearLayout>
 

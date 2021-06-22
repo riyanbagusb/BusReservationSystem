@@ -2,10 +2,7 @@ package com.bagus.busreservationsystem.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Ticket {
-    @SerializedName("id")
-    private Integer id;
-
+public class TicketReservation {
     @SerializedName("seatNumber")
     private Integer seatNumber;
 
@@ -15,26 +12,21 @@ public class Ticket {
     @SerializedName("journeyDate")
     private String journeyDate;
 
-    @SerializedName("tripSchedule")
-    private TripSchedule tripSchedule;
+    @SerializedName("tripScheduleId")
+    private Integer tripScheduleId;
 
-    public Ticket() {
+    @SerializedName("passengerId")
+    private Integer passengerId;
+
+    public TicketReservation() {
     }
 
-    public Ticket(Integer id, Integer seatNumber, Boolean cancellable, String journeyDate, TripSchedule tripSchedule) {
-        this.id = id;
+    public TicketReservation(Integer seatNumber, Boolean cancellable, String journeyDate, Integer tripScheduleId, Integer passengerId) {
         this.seatNumber = seatNumber;
         this.cancellable = cancellable;
         this.journeyDate = journeyDate;
-        this.tripSchedule = tripSchedule;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+        this.tripScheduleId = tripScheduleId;
+        this.passengerId = passengerId;
     }
 
     public Integer getSeatNumber() {
@@ -61,11 +53,19 @@ public class Ticket {
         this.journeyDate = journeyDate;
     }
 
-    public TripSchedule getTripSchedule() {
-        return tripSchedule;
+    public Integer getTripScheduleId() {
+        return tripScheduleId;
     }
 
-    public void setTripSchedule(TripSchedule tripSchedule) {
-        this.tripSchedule = tripSchedule;
+    public void setTripScheduleId(Integer tripScheduleId) {
+        this.tripScheduleId = tripScheduleId;
+    }
+
+    public Integer getPassengerId() {
+        return passengerId;
+    }
+
+    public void setPassengerId(Integer passengerId) {
+        this.passengerId = passengerId;
     }
 }

@@ -4,17 +4,26 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.bagus.busreservationsystem.R;
+import com.bagus.busreservationsystem.adapter.TicketListAdapter;
+import com.bagus.busreservationsystem.adapter.TripScheduleListAdapter;
 import com.bagus.busreservationsystem.models.Stop;
+import com.bagus.busreservationsystem.models.Ticket;
+import com.bagus.busreservationsystem.models.TripSchedule;
 import com.bagus.busreservationsystem.rest.APIClient;
 import com.bagus.busreservationsystem.rest.APIInterface;
 import com.bagus.busreservationsystem.utils.MySession;
@@ -32,6 +41,7 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
     private EditText edCalendar, edStartDate, edEndDate;
+    private Button btnCari;
     private Calendar myCalendar;
     private DatePickerDialog.OnDateSetListener date;
     private Spinner spSourceStop,spDestinationStop;
@@ -39,6 +49,11 @@ public class HomeFragment extends Fragment {
     private List<Integer> spinnerListId;
     private List<String> spinnerListName;
     private View fragmentView;
+    private RecyclerView rvListTripSchedule;
+    private RecyclerView.Adapter tripScheduleAdapter;
+    private RecyclerView.LayoutManager tripScheduleLayoutManager;
+    private String from, to;
+    private Integer destStopId, sourceStopId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,6 +66,7 @@ public class HomeFragment extends Fragment {
         edEndDate = fragmentView.findViewById(R.id.edEndDate);
         spSourceStop = fragmentView.findViewById(R.id.spSourceStop);
         spDestinationStop = fragmentView.findViewById(R.id.spDestinationStop);
+        btnCari = fragmentView.findViewById(R.id.btnCari);
 
 
         date = (view, year, monthOfYear, dayOfMonth) -> {
@@ -72,6 +88,24 @@ public class HomeFragment extends Fragment {
 
         getStops();
 
+        btnCari.setOnClickListener(v -> {
+            from = edStartDate.getText().toString();
+            to = edEndDate.getText().toString();
+            sourceStopId = spinnerListId.get(spSourceStop.getSelectedItemPosition());
+            destStopId = spinnerListId.get(spDestinationStop.getSelectedItemPosition());
+
+            if (destStopId.equals(null) || destStopId.equals(null) || TextUtils.isEmpty(from) || TextUtils.isEmpty(to) ) {
+                Toast.makeText(getActivity(), "Tanggal masih kosong!", Toast.LENGTH_LONG).show();
+            } else {
+                cariTripSchedule();
+            }
+        });
+
+        rvListTripSchedule = fragmentView.findViewById(R.id.rvListTripSchedule);
+        tripScheduleLayoutManager = new LinearLayoutManager(getActivity());
+        rvListTripSchedule.setLayoutManager(tripScheduleLayoutManager);
+        getTripSchedule();
+
         return fragmentView;
     }
 
@@ -87,7 +121,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateLabel(EditText editText) {
-        String myFormat = "MM/dd/yyyy";
+        String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         editText.setText(sdf.format(myCalendar.getTime()));
     }
@@ -117,6 +151,47 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Stop>> call, Throwable t) {
 
+            }
+        });
+    }
+
+    private void getTripSchedule() {
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<List<TripSchedule>> listCall = apiInterface.getTripSchedules();
+        listCall.enqueue(new Callback<List<TripSchedule>>() {
+            @Override
+            public void onResponse(Call<List<TripSchedule>> call, Response<List<TripSchedule>> response) {
+                List<TripSchedule> tripScheduleList = response.body();
+                tripScheduleAdapter = new TripScheduleListAdapter(tripScheduleList, getContext());
+                rvListTripSchedule.setAdapter(tripScheduleAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<TripSchedule>> call, Throwable t) {
+            }
+        });
+    }
+
+    private void cariTripSchedule() {
+
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<List<TripSchedule>> listCall = apiInterface.getTripSchedulesParam(destStopId, from, sourceStopId, to);
+        listCall.enqueue(new Callback<List<TripSchedule>>() {
+            @Override
+            public void onResponse(Call<List<TripSchedule>> call, Response<List<TripSchedule>> response) {
+                List<TripSchedule> tripScheduleList = response.body();
+                if(!tripScheduleList.isEmpty()) {
+                    tripScheduleAdapter = new TripScheduleListAdapter(tripScheduleList, getContext());
+                    rvListTripSchedule.setAdapter(tripScheduleAdapter);
+                    rvListTripSchedule.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(getActivity(), "Jadwal perjalanan tidak ditemukan!", Toast.LENGTH_SHORT).show();
+                    rvListTripSchedule.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TripSchedule>> call, Throwable t) {
             }
         });
     }

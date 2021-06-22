@@ -23,6 +23,7 @@ public class MySession {
     public static final String KEY_EMAIL = "email";
     public static final String KEY_FIRST_NAME = "first_name";
     public static final String KEY_LAST_NAME = "last_name";
+    public static final String KEY_MOBILE_NUMBER = "mobile_number";
     public static final String KEY_TOKEN = "token";
 
     public MySession(Context context){
@@ -31,12 +32,13 @@ public class MySession {
         editor = pref.edit();
     }
 
-    public void createLoginSession(int _id, String email, String firstName, String lastName, String token){
+    public void createLoginSession(int _id, String email, String firstName, String lastName, String mobileNumber, String token){
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(KEY_ID, String.valueOf(_id));
         editor.putString(KEY_EMAIL, email);
         editor.putString(KEY_FIRST_NAME, firstName);
         editor.putString(KEY_LAST_NAME, lastName);
+        editor.putString(KEY_MOBILE_NUMBER, mobileNumber);
         editor.putString(KEY_TOKEN, token);
         editor.commit();
     }
@@ -57,6 +59,7 @@ public class MySession {
         user.put(KEY_ID, pref.getString(KEY_ID, null));
         user.put(KEY_FIRST_NAME, pref.getString(KEY_FIRST_NAME, null));
         user.put(KEY_LAST_NAME, pref.getString(KEY_LAST_NAME, null));
+        user.put(KEY_MOBILE_NUMBER, pref.getString(KEY_MOBILE_NUMBER, null));
         user.put(KEY_TOKEN, pref.getString(KEY_TOKEN, null));
 
         return user;

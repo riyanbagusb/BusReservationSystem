@@ -18,6 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
     private MySession mySession;
     private BottomNavigationView bottomNavigationView;
+    private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +33,11 @@ public class MainActivity extends AppCompatActivity {
         mySession = new MySession(this);
 
 
+
+
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            Fragment fragment = null;
+            fragment = null;
             int id = item.getItemId();
             if (id == R.id.frHome){
                 fragment = new HomeFragment();
@@ -49,7 +52,11 @@ public class MainActivity extends AppCompatActivity {
             return loadFragment(fragment);
         });
 
-        loadFragment(new HomeFragment());
+        if(getIntent().getIntExtra("ticketFragment",0) == 1){
+            loadFragment(new TicketFragment());
+        } else {
+            loadFragment(new HomeFragment());
+        }
     }
 
     private boolean loadFragment(Fragment fragment){

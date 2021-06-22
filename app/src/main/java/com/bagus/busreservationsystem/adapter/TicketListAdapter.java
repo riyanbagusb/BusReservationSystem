@@ -36,6 +36,10 @@ public class TicketListAdapter extends RecyclerView.Adapter<TicketListAdapter.My
     public void onBindViewHolder(@NonNull @NotNull TicketListAdapter.MyViewHolder holder, int position) {
         holder.txtSeatNumber.setText(ticketList.get(position).getSeatNumber().toString());
         holder.txtJourneyDate.setText(ticketList.get(position).getJourneyDate());
+        holder.txtSourceStop.setText(ticketList.get(position).getTripSchedule().getTripDetail().getSourceStop().getName());
+        holder.txtDestinationStop.setText(ticketList.get(position).getTripSchedule().getTripDetail().getDestStop().getName());
+        holder.txtAgency.setText(ticketList.get(position).getTripSchedule().getTripDetail().getAgency().getName());
+        holder.txtBus.setText(ticketList.get(position).getTripSchedule().getTripDetail().getBus().getCode());
     }
 
     @Override
@@ -44,11 +48,15 @@ public class TicketListAdapter extends RecyclerView.Adapter<TicketListAdapter.My
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView txtSeatNumber, txtJourneyDate;
+        public TextView txtSeatNumber, txtJourneyDate, txtSourceStop, txtDestinationStop, txtAgency, txtBus;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             txtSeatNumber = itemView.findViewById(R.id.txtSeatNumber);
             txtJourneyDate = itemView.findViewById(R.id.txtJourneyDate);
+            txtSourceStop = itemView.findViewById(R.id.txtSourceStop);
+            txtDestinationStop = itemView.findViewById(R.id.txtDestinationStop);
+            txtAgency = itemView.findViewById(R.id.txtAgency);
+            txtBus = itemView.findViewById(R.id.txtBus);
         }
     }
 }

@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                 AuthLogin userData = response.body();
                 if (userData != null){
                     User user = userData.getUser();
-                    mySession.createLoginSession(user.getId(),user.getEmail(),user.getFirstName(),user.getLastName(),userData.accessToken);
+                    mySession.createLoginSession(user.getId(),user.getEmail(),user.getFirstName(),user.getLastName(), user.getMobileNumber(), userData.accessToken);
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(i);
                     finish();
