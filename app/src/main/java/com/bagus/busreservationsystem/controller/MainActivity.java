@@ -32,9 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
         mySession = new MySession(this);
 
-
-
-
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             fragment = null;
@@ -53,7 +50,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if(getIntent().getIntExtra("ticketFragment",0) == 1){
+            bottomNavigationView.setSelectedItemId(R.id.ftTicket);
             loadFragment(new TicketFragment());
+        } else if (getIntent().getIntExtra("profileFragment",0) == 1) {
+            bottomNavigationView.setSelectedItemId(R.id.frProfile);
+            loadFragment(new ProfileFragment());
         } else {
             loadFragment(new HomeFragment());
         }

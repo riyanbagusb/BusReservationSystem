@@ -38,6 +38,7 @@ public class TripScheduleListAdapter extends  RecyclerView.Adapter<TripScheduleL
     public void onBindViewHolder(@NonNull @NotNull TripScheduleListAdapter.MyViewHolder holder, int position) {
         holder.txtJourneyDate.setText(tripScheduleList.get(position).getTripDate());
         holder.txtAvailableSeats.setText(tripScheduleList.get(position).getAvailableSeats().toString());
+        holder.txtFare.setText("Rp."+tripScheduleList.get(position).getTripDetail().getFare().toString());
         holder.txtSourceStop.setText(tripScheduleList.get(position).getTripDetail().getSourceStop().getName());
         holder.txtDestinationStop.setText(tripScheduleList.get(position).getTripDetail().getDestStop().getName());
         holder.txtAgency.setText(tripScheduleList.get(position).getTripDetail().getAgency().getName());
@@ -58,11 +59,12 @@ public class TripScheduleListAdapter extends  RecyclerView.Adapter<TripScheduleL
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView txtJourneyDate, txtAvailableSeats, txtSourceStop, txtDestinationStop, txtAgency, txtBus;
+        public TextView txtJourneyDate, txtAvailableSeats, txtFare, txtSourceStop, txtDestinationStop, txtAgency, txtBus;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             txtJourneyDate = itemView.findViewById(R.id.txtJourneyDate);
             txtAvailableSeats = itemView.findViewById(R.id.txtAvailableSeats);
+            txtFare = itemView.findViewById(R.id.txtFare);
             txtSourceStop = itemView.findViewById(R.id.txtSourceStop);
             txtDestinationStop = itemView.findViewById(R.id.txtDestinationStop);
             txtAgency = itemView.findViewById(R.id.txtAgency);

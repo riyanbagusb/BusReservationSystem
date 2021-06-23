@@ -199,15 +199,30 @@
                             android:textAlignment="textEnd"
                             android:text="08123456789" />
 
-
                     </LinearLayout>
+
+                    <View
+                        android:layout_height="1dp"
+                        android:background="@color/black_200"
+                        android:layout_marginVertical="10dp"
+                        style="@style/dividerHorizontal" />
+
+                    <Button
+                        android:id="@+id/btnUpdateProfile"
+                        android:backgroundTint="@color/bca"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="false"
+                        android:drawableRight="@drawable/ic_baseline_person"
+                        android:layout_gravity="center"
+                        android:text="Ubah Data" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
             <Button
-                android:id="@+id/btnPassword"
+                android:id="@+id/btnUpdatePassword"
                 android:layout_marginHorizontal="20dp"
                 android:textColor="@color/black_500"
                 android:backgroundTint="@color/white"

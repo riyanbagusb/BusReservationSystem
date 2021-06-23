@@ -1,5 +1,6 @@
 package com.bagus.busreservationsystem.controller;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -28,7 +29,7 @@ public class BookingActivity extends AppCompatActivity {
     private MySession mySession;
     private APIInterface apiInterface;
     private TripSchedule tripSchedule;
-    private TextView txtJourneyDate, txtSourceStop, txtDestinationStop, txtAgency, txtBus;
+    private TextView txtJourneyDate, txtFare, txtSourceStop, txtDestinationStop, txtAgency, txtBus;
     private Button btnPesanTiket;
     private Integer passengerId;
     private TicketReservation ticketReservation;
@@ -47,6 +48,7 @@ public class BookingActivity extends AppCompatActivity {
         passengerId = Integer.valueOf(userSession.get(MySession.KEY_ID));
 
         txtJourneyDate = findViewById(R.id.txtJourneyDate);
+        txtFare = findViewById(R.id.txtFare);
         txtSourceStop = findViewById(R.id.txtSourceStop);
         txtDestinationStop = findViewById(R.id.txtDestinationStop);
         txtAgency = findViewById(R.id.txtAgency);
@@ -58,7 +60,18 @@ public class BookingActivity extends AppCompatActivity {
         getTripSchedule(id);
 
         btnPesanTiket.setOnClickListener(v -> {
-            pesanTiket();
+            final AlertDialog.Builder builder = new AlertDialog.Builder(BookingActivity.this);
+            builder.setTitle("Pesan Tiket");
+            builder.setMessage("Apakah anda yakin ingin memesan tiket ini?");
+            builder.setPositiveButton("ya",
+                    (dialog, which) -> {
+                        dialog.dismiss();
+                        pesanTiket();
+                    });
+            builder.setNegativeButton("tidak",
+                    (dialog, which) -> dialog.dismiss());
+            builder.setCancelable(false);
+            builder.show();
         });
     }
 
@@ -71,6 +84,7 @@ public class BookingActivity extends AppCompatActivity {
             public void onResponse(Call<TripSchedule> call, Response<TripSchedule> response) {
                 tripSchedule = response.body();
                 txtJourneyDate.setText(tripSchedule.getTripDate());
+                txtFare.setText("Rp."+tripSchedule.getTripDetail().getFare());
                 txtSourceStop.setText(tripSchedule.getTripDetail().getSourceStop().getName());
                 txtDestinationStop.setText(tripSchedule.getTripDetail().getDestStop().getName());
                 txtAgency.setText(tripSchedule.getTripDetail().getAgency().getName());

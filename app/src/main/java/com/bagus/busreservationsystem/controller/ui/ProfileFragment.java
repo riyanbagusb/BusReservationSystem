@@ -1,5 +1,6 @@
 package com.bagus.busreservationsystem.controller.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,7 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bagus.busreservationsystem.R;
+import com.bagus.busreservationsystem.controller.BookingActivity;
 import com.bagus.busreservationsystem.controller.MainActivity;
+import com.bagus.busreservationsystem.controller.UpdateProfileActivity;
 import com.bagus.busreservationsystem.utils.MySession;
 
 import java.util.HashMap;
@@ -20,7 +23,7 @@ public class ProfileFragment extends Fragment {
     private MySession mySession;
     private String firstName, lastName, email, mobileNumber;
     private TextView txtName, txtEmail, txtFirstName, txtLastName, txtEmail2, txtMobileNumber;
-    private Button btnLogout;
+    private Button btnLogout, btnUpdatePassword, btnUpdateProfile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +42,8 @@ public class ProfileFragment extends Fragment {
         }
 
         btnLogout = fragmentView.findViewById(R.id.btnLogout);
+        btnUpdatePassword = fragmentView.findViewById(R.id.btnUpdatePassword);
+        btnUpdateProfile = fragmentView.findViewById(R.id.btnUpdateProfile);
         txtName = fragmentView.findViewById(R.id.txtName);
         txtEmail = fragmentView.findViewById(R.id.txtEmail);
         txtFirstName = fragmentView.findViewById(R.id.txtFirstName);
@@ -56,6 +61,21 @@ public class ProfileFragment extends Fragment {
 
         btnLogout.setOnClickListener(v -> {
             ((MainActivity)getActivity()).logout();
+        });
+
+        btnUpdatePassword.setOnClickListener(v -> {
+            Intent i = new Intent(getActivity(), UpdateProfileActivity.class);
+            i.putExtra("showMenu","updatePassword");
+            startActivity(i);
+        });
+
+        btnUpdateProfile.setOnClickListener(v -> {
+            Intent i = new Intent(getActivity(), UpdateProfileActivity.class);
+            i.putExtra("showMenu","updateProfile");
+            i.putExtra("firstName", firstName);
+            i.putExtra("lastName", lastName);
+            i.putExtra("mobileNumber", mobileNumber);
+            startActivity(i);
         });
 
         return fragmentView;

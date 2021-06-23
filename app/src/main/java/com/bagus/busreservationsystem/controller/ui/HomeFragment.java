@@ -156,8 +156,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void getTripSchedule() {
+        String myFormat = "yyyy-MM-dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        String today = sdf.format(new Date().getTime());
         apiInterface = APIClient.getClient().create(APIInterface.class);
-        Call<List<TripSchedule>> listCall = apiInterface.getTripSchedules();
+        Call<List<TripSchedule>> listCall = apiInterface.getTripSchedules(today);
         listCall.enqueue(new Callback<List<TripSchedule>>() {
             @Override
             public void onResponse(Call<List<TripSchedule>> call, Response<List<TripSchedule>> response) {

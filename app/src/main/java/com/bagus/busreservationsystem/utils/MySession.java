@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.bagus.busreservationsystem.controller.LoginActivity;
+import com.bagus.busreservationsystem.models.UserProfile;
 
 import java.util.HashMap;
 
@@ -74,6 +75,13 @@ public class MySession {
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         _context.startActivity(i);
+    }
+
+    public void updateProfileSession(UserProfile userProfile){
+        editor.putString(KEY_FIRST_NAME, userProfile.getFirstName());
+        editor.putString(KEY_LAST_NAME, userProfile.getLastName());
+        editor.putString(KEY_MOBILE_NUMBER, userProfile.getMobileNumber());
+        editor.commit();
     }
 
     public boolean isLoggedIn(){
