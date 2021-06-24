@@ -44,11 +44,13 @@ public class UpdateProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
         mySession = new MySession(this);
         HashMap<String, String> userSession = mySession.getUserDetails();
         token = userSession.get(MySession.KEY_TOKEN);
-
-
 
         edPassword = findViewById(R.id.edPassword);
         edRetypePassword = findViewById(R.id.edRetypePassword);
@@ -90,8 +92,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
                 break;
         }
-
-
     }
 
     private void updatePassword() {
