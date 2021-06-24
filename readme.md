@@ -2,6 +2,14 @@
 
 <samp>
 
+- Akses Login
+	- Email		: user@user.com
+	- Password	: password
+
+- Release APK
+	- [Aplikasi Bus Reservation System](https://github.com/riyanbagusb/BusReservationSystem/raw/master/app/release/app-release.apk)
+	- [APK Location on Project](https://github.com/riyanbagusb/BusReservationSystem/blob/master/app/release/app-release.apk)
+
 - Aplikasi Bus Reservation System
 ![Main Menu](https://github.com/riyanbagusb/BusReservationSystem/raw/master/images/BRS.png)
 
